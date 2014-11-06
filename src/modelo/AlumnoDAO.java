@@ -7,14 +7,12 @@
 package modelo;
 
 import modelo.factoriaAlumnos.alumno.Alumno;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import modelo.interfaces.CRUD;
 import modelo.lambdas.ObtenerIDLambda;
 
 /**

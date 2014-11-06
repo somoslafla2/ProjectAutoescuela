@@ -19,7 +19,7 @@ import modelo.llamadas.Llamadas;
  * @author Oscar
  */
 public class ObtenerIDLambda {
-    private Result<String,Integer> consultarID = (String dni)->{
+    private final Result<String,Integer> consultarID = (String dni)->{
         Integer id = -1;
         Connection con = ConexionAutoescuela.getInstance().getConexion();
         try (CallableStatement llamada = con.prepareCall(Llamadas.OBTENERIDALUMNO)) {

@@ -6,12 +6,10 @@
 
 package modelo.lambdas;
 
+import controlador.ControladorSingleton;
 import modelo.carnet.TipoCarnet;
 import modelo.excepciones.AlumnoMalFormado;
 import modelo.factoriaAlumnos.alumno.Alumno;
-import modelo.factoriaAlumnos.factoria.CreadorAlumnoDistancia;
-import modelo.factoriaAlumnos.factoria.CreadorAlumnoPresencial;
-import modelo.factoriaAlumnos.factoria.FactoriaAlumnado;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -35,7 +33,7 @@ public class ResultLambda {
             rs = con.createStatement().executeQuery(Llamadas.CONSULTAR_TODO);
             
         } catch (SQLException ex){
-            ex.printStackTrace();
+            rs = null;
         }
         
         return rs;
@@ -62,24 +60,18 @@ public class ResultLambda {
             llamada.registerOutParameter(7, Types.VARCHAR);
             llamada.registerOutParameter(8, Types.DATE);
 
-            int filas=llamada.executeUpdate();
-            System.out.println(filas);
-            FactoriaAlumnado f;
-            if (llamada.getString(7).equals("PRESENCIAL")){
-                f = new CreadorAlumnoPresencial();
-            } else {
-                f = new CreadorAlumnoDistancia();
-            }
             Calendar c = new GregorianCalendar();
             c.setTime(llamada.getDate(8));
-            Alumno a = null;
+            
             try{
-                a = f.crearAlumno(llamada.getString(1), llamada.getString(3), 
+                Alumno a = ControladorSingleton.getInstance().crearAlumno(
+                    llamada.getString(7).equals("PRESENCIAL"),
+                    llamada.getString(1), llamada.getString(3), 
                     llamada.getString(4), llamada.getString(5), llamada.getString(6), c);
                 ma = new MatriculaAlumno(id, a, TipoCarnet.A);
-              //  ma.setIdAlumno(id.intValue());
-            }catch(AlumnoMalFormado ex){}
-            
+            } catch (AlumnoMalFormado ex){
+                
+            }
             llamada.close();  
             
             llamada = con.prepareCall("SELECT TIPOCARNET, FECHAALTA FROM MATRICULALUMNO WHERE IDALUMNO=?");
