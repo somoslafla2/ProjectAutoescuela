@@ -27,6 +27,9 @@ import modelo.llamadas.Llamadas;
  * @author Oscar
  */
 public class ResultLambda {
+    /**
+     * Retorna un ResultSet con todos los alumno en la base de datos.
+     */
     private final Result<ResultSet,ResultSet> consultarTodo = (ResultSet rs)->{
         Connection con = ConexionAutoescuela.getInstance().getConexion();
         try {
@@ -40,8 +43,7 @@ public class ResultLambda {
     };
     
     /**
-     * CONSULTAR_ALUMNO 
-     * Devuelve una MatriculaAlumno
+     * Retorna un alumno con los carnets matrículados.
      */
     private final Result<Integer,MatriculaAlumno> consultarAlumno = (Integer id)->{
         MatriculaAlumno ma = null;
@@ -60,38 +62,52 @@ public class ResultLambda {
             llamada.registerOutParameter(7, Types.VARCHAR);
             llamada.registerOutParameter(8, Types.DATE);
 
-            Calendar c = new GregorianCalendar();
-            c.setTime(llamada.getDate(8));
+            int filas = llamada.executeUpdate();
             
-            try{
-                Alumno a = ControladorSingleton.getInstance().crearAlumno(
-                    llamada.getString(7).equals("PRESENCIAL"),
-                    llamada.getString(1), llamada.getString(3), 
-                    llamada.getString(4), llamada.getString(5), llamada.getString(6), c);
-                ma = new MatriculaAlumno(id, a, TipoCarnet.A);
-            } catch (AlumnoMalFormado ex){
-                
+            if (filas != 0){
+                ma = recogerLlamada(llamada, id);
+                ma = consultarCarnet(ma, id);                                    
             }
             llamada.close();  
-            
-            llamada = con.prepareCall("SELECT TIPOCARNET, FECHAALTA FROM MATRICULALUMNO WHERE IDALUMNO=?");
-            llamada.setInt(1, id);
-            ResultSet rs = llamada.executeQuery();
-            while(rs.next()){
-                ma.setCarnets(TipoCarnet.valueOf(rs.getString("TIPOCARNET")));
-                c = new GregorianCalendar();
-                c.setTime(rs.getDate("FECHAALTA"));
-                ma.setFechaAlta(c);
-            }
-            rs.close();
-            llamada.close();
         }catch(SQLException ex){
             ex.printStackTrace();
-        }
-        
+        }        
         return ma;
     };
 
+    private MatriculaAlumno recogerLlamada(CallableStatement llamada,Integer id) throws SQLException{
+        MatriculaAlumno ma = null;
+        
+        Calendar c = new GregorianCalendar();
+        c.setTime(llamada.getDate(8));
+
+        try{
+            Alumno a = ControladorSingleton.getInstance().crearAlumno(
+                llamada.getString(7).equals("PRESENCIAL"),
+                llamada.getString(1), llamada.getString(3), 
+                llamada.getString(4), llamada.getString(5), llamada.getString(6), c);
+            ma = new MatriculaAlumno(id, a, TipoCarnet.A);
+        } catch (AlumnoMalFormado ex){
+        }
+        return ma;
+    }
+    
+    private MatriculaAlumno consultarCarnet(MatriculaAlumno ma, Integer id) throws SQLException{
+        Connection con = ConexionAutoescuela.getInstance().getConexion();
+        CallableStatement llamada = con.prepareCall("SELECT TIPOCARNET, FECHAALTA FROM MATRICULALUMNO WHERE IDALUMNO=?");
+        llamada.setInt(1, id);
+        ResultSet rs = llamada.executeQuery();
+        while(rs.next()){
+            ma.setCarnets(TipoCarnet.valueOf(rs.getString("TIPOCARNET")));
+            Calendar c = new GregorianCalendar();
+            c.setTime(rs.getDate("FECHAALTA"));
+            ma.setFechaAlta(c);
+        }
+        rs.close();
+        llamada.close();
+        return ma;
+    }
+    
     public Result<ResultSet, ResultSet> getConsultarTodo() {
         return consultarTodo;
     }

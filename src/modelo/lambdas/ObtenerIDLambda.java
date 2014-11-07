@@ -28,7 +28,7 @@ public class ObtenerIDLambda {
             llamada.setString(2, dni);
 
             int filas_afectadas = llamada.executeUpdate();
-            System.out.println("las filas afectadas son: " + filas_afectadas);
+            //System.out.println("las filas afectadas son: " + filas_afectadas);
             // Se recoge el IDALUMNO de la tabla
             id = llamada.getInt(1);
 

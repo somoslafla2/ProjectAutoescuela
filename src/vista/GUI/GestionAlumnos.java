@@ -9,7 +9,6 @@ import controlador.Controlador;
 import modelo.carnet.TipoCarnet;
 import modelo.factoriaAlumnos.alumno.AlumnoPresencial;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import modelo.MatriculaAlumno;
 import modelo.conexion.ConexionAutoescuela;
@@ -116,6 +115,11 @@ public class GestionAlumnos extends javax.swing.JFrame implements InterfazVista 
         jTextAreaConsultas.setText(cadena);
     }
 
+    @Override
+    public void mostarMensaje(String message) {
+        JOptionPane.showMessageDialog(null, message);
+    }
+    
     @Override
     public void show(MatriculaAlumno ma) {
         datosAlumno2.getjTextFieldIdAlumno().setText(Integer.toString(ma.getIdAlumno()));
@@ -480,9 +484,9 @@ public class GestionAlumnos extends javax.swing.JFrame implements InterfazVista 
     private javax.swing.JTextArea jTextTabla;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void setControlador(Controlador c) {
-        this.controlador = c;
-    }
+//    @Override
+//    public void setControlador(Controlador c) {
+//        this.controlador = c;
+//    }
 
 }

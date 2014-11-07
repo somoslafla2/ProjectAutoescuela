@@ -6,6 +6,7 @@
 
 package modelo.lambdas;
 
+import controlador.ControladorSingleton;
 import modelo.factoriaAlumnos.alumno.Alumno;
 import modelo.factoriaAlumnos.alumno.AlumnoPresencial;
 import java.sql.CallableStatement;
@@ -40,16 +41,10 @@ public class UpdateLambda {
             if (id != -1){
                 llamada = con.prepareCall(Llamadas.MODIFICAR_ALUMNO);
                 llamada.setInt(1, id);
-                llamada.setString(2, alumno.getNombre());
-                llamada.setString(3, alumno.getApellido1());
-                llamada.setString(4, alumno.getApellido2());
-                llamada.setString(5, alumno.getDni());
-                llamada.setString(6, alumno.getTelefono());
-                llamada.setString(7, (alumno instanceof AlumnoPresencial ? "PRESENCIAL" : "A DISTANCIA"));
-                llamada.setString(8, alumno.fechaToString());
+                ControladorSingleton.getInstance().prepararLlamada(llamada, alumno, null);
 
                 int filas_afectadas = llamada.executeUpdate();
-                System.out.println("las filas afectadas son: " + filas_afectadas);
+                //System.out.println("las filas afectadas son: " + filas_afectadas);
                 exito = true;
             }
             llamada.close();

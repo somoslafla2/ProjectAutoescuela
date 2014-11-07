@@ -5,11 +5,10 @@
  */
 package vista.consola.menu.assets;
 
-import controlador.Controlador;
+import controlador.ControladorSingleton;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import modelo.conexion.ConexionAutoescuela;
 import vista.consola.menu.Action;
 import vista.consola.menu.Menu;
@@ -20,38 +19,38 @@ import vista.consola.menu.Menu;
  */
 public class AssetMenu {
     
-    public static Menu createMenu(Controlador controlador){
-        Menu principal = createMenuPrincipal(controlador);
-        Menu consultas = crearMenuConsultar(controlador);
+    public static Menu createMenu(){
+        Menu principal = createMenuPrincipal();
+        Menu consultas = crearMenuConsultar();
         principal.setNext(consultas);
         consultas.setPrev(principal);
         return principal;
     }
     
-    private static Menu createMenuPrincipal(Controlador controlador){
+    private static Menu createMenuPrincipal(){
         
-        Menu m = new Menu("Gestión Alumnos -----", new ArrayList(),controlador);  
+        Menu m = new Menu("Gestión Alumnos -----", new ArrayList());  
         
         Action action = () -> {
-            System.out.println("Recoger los datos del alumno");
-            System.out.println("Dar de alta un alumno en la autoescuela\n");
-            controlador.crear();
+//            System.out.println("Recoger los datos del alumno");
+//            System.out.println("Dar de alta un alumno en la autoescuela\n");
+            ControladorSingleton.getInstance().crear();
             return m;
         };
         m.createOption("0. Alta alumno", action);
         
         action = () -> {
-            System.out.println("Seleccionar el alumno por algun criterio");
-            System.out.println("Dar de baja un alumno en la autoescuela\n");
-            controlador.borrar();
+//            System.out.println("Seleccionar el alumno por algun criterio");
+//            System.out.println("Dar de baja un alumno en la autoescuela\n");
+            ControladorSingleton.getInstance().borrar();
             return m;
         };
         m.createOption("1. Baja Alumno", action);
         
         action = () -> { 
-            System.out.println("Actualizo los datos de un alumno de la autoescuela\n");
-            controlador.show(controlador.consultar(null));
-            controlador.actualizar();
+//            System.out.println("Actualizo los datos de un alumno de la autoescuela\n");
+            if (ControladorSingleton.getInstance().show(ControladorSingleton.getInstance().consultar(null)))
+                ControladorSingleton.getInstance().actualizar();
             return m;
         };
         m.createOption("2. Actualizar Alumno", action);
@@ -63,9 +62,9 @@ public class AssetMenu {
         
         action = () -> {
             try {
-                ConexionAutoescuela.getInstance().getConexion().close();
+                ConexionAutoescuela.getInstance().closeConnection();
             } catch (SQLException ex) {
-                Logger.getLogger(AssetMenu.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Problema en la conexión", "Información de Conexión", JOptionPane.INFORMATION_MESSAGE);
             }
             System.exit(0);
             return null;
@@ -75,19 +74,19 @@ public class AssetMenu {
         return m;
     }
     
-    private static Menu crearMenuConsultar(Controlador controlador){
-        Menu m = new Menu("Menu Consultas -----", new ArrayList(),controlador);
+    private static Menu crearMenuConsultar(){
+        Menu m = new Menu("Menu Consultas -----", new ArrayList());
         
         Action action = () -> {
-            System.out.println("Muestro todos los alumnos de la autoescuela con todos sus campos");
-            controlador.consultar();
+//            System.out.println("Muestro todos los alumnos de la autoescuela con todos sus campos");
+            ControladorSingleton.getInstance().consultar();
             return m;
         };
         m.createOption("0. Consultar todo", action);
         
         action = () -> {
-            System.out.println("Consulto por algun criterio");
-            controlador.show(controlador.consultar(null));
+//            System.out.println("Consulto por algun criterio");
+            ControladorSingleton.getInstance().show(ControladorSingleton.getInstance().consultar(null));
             return m;  
         };
         m.createOption("1. Consultar por DNI", action);

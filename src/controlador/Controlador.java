@@ -6,6 +6,7 @@
 
 package controlador;
 
+import excepciones.AlumnoNoEncontrado;
 import modelo.carnet.TipoCarnet;
 import modelo.excepciones.AlumnoMalFormado;
 import modelo.factoriaAlumnos.alumno.Alumno;
@@ -76,7 +77,12 @@ public class Controlador {
     
     
     public boolean borrar(){
-        return aDAO.delete(new DeleteLambda().getBorrar(),vista.getDNI());
+        try {
+            return aDAO.delete(new DeleteLambda().getBorrar(),vista.getDNI());
+        } catch (AlumnoNoEncontrado ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
     }
     
     public void consultar(){
@@ -85,19 +91,24 @@ public class Controlador {
     }
     
     public MatriculaAlumno consultar(String dni){
-        if (dni==null)
-            dni = vista.getDNI();
-        
-        MatriculaAlumno ma = aDAO.resultAlumno(new ResultLambda().getConsultarAlumno(), dni);
-        if(ma != null){
-            //vista.show(ma);
-            return ma;
+        try {
+            if (dni==null)
+                dni = vista.getDNI();
             
-        }
-        return null;
+            MatriculaAlumno ma = aDAO.resultAlumno(new ResultLambda().getConsultarAlumno(), dni);
+            if(ma != null){
+                //vista.show(ma);
+                return ma;
+                
+            }
+            return null;
 //        aDAO.showAlumno();
 //        int id = aDAO.getID(conexion.getConexion(), dni);
 //        System.out.println(mDAO.consultar(conexion.getConexion(), id));
+        } catch (AlumnoNoEncontrado ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     public void actualizar(){

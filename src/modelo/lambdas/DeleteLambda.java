@@ -28,7 +28,7 @@ public class DeleteLambda {
             llamada.setInt(1, id); // recoger el id
 
             int filas_afectadas = llamada.executeUpdate();
-            System.out.println("las filas afectadas son: " + filas_afectadas);
+           // System.out.println("las filas afectadas son: " + filas_afectadas);
 
             llamada.close();
             exito = true;

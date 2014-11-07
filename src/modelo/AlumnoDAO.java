@@ -6,6 +6,8 @@
 
 package modelo;
 
+import controlador.ControladorSingleton;
+import excepciones.AlumnoNoEncontrado;
 import modelo.factoriaAlumnos.alumno.Alumno;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -59,7 +61,7 @@ public class AlumnoDAO {
      */
     public String resultTodo(Function<ResultSet,ResultSet> crud) {
         String cadena = "NOMBRE\tAPELLIDO1\tAPELLIDO2\tDNI\tTELEFONO\n"
-                      + "------\t---------\t---------\t---\t--------";
+                      + "------\t---------\t---------\t---\t--------\n";
         ResultSet rs = null;
         rs = crud.apply(rs);
         try {
@@ -80,14 +82,12 @@ public class AlumnoDAO {
      * @param dni
      * @return Retorna una MatriculaAlumno si el alumno con dni está en la base de datos,
      * en caso contrario, retorna null.
+     * @throws excepciones.AlumnoNoEncontrado
      */
-    public MatriculaAlumno resultAlumno(Function<Integer,MatriculaAlumno> crud, String dni){
+    public MatriculaAlumno resultAlumno(Function<Integer,MatriculaAlumno> crud, String dni) throws AlumnoNoEncontrado{
         Integer id = obtenerID(new ObtenerIDLambda().getConsultarID(), dni);
-        if (id != -1){
-            ma = crud.apply(id);
-            return ma;
-        }
-        return null;
+        ma = crud.apply(id);
+        return ma;
     }
     
     /**
@@ -106,10 +106,12 @@ public class AlumnoDAO {
      * @param crud Se fijan los datos de entrada y retorno a Integer y Boolean.
      * @param dni
      * @return Retorna true si se borra correctamente y false en caso contrario.
+     * @throws excepciones.AlumnoNoEncontrado
      */
-    public boolean delete (Function<Integer,Boolean> crud, String dni){
-        Integer id = obtenerID(new ObtenerIDLambda().getConsultarID(),dni);        
+    public boolean delete (Function<Integer,Boolean> crud, String dni) throws AlumnoNoEncontrado{
+        Integer id = obtenerID(new ObtenerIDLambda().getConsultarID(),dni);
         return crud.apply(id);
+
     }
     
     /**
@@ -117,9 +119,13 @@ public class AlumnoDAO {
      * @param crud Se fijan los tipos de entrada y retorno a String e Integer.
      * @param dni 
      * @return Retorna el IDALUMNO si encuentra un alumno con el dni, y -1 en caso contrario.
+     * @throws excepciones.AlumnoNoEncontrado
      */
-    public Integer obtenerID(Function<String,Integer> crud, String dni){        
-        return crud.apply(dni);
+    public Integer obtenerID(Function<String,Integer> crud, String dni) throws AlumnoNoEncontrado{        
+        Integer id = crud.apply(dni);
+        if (id == -1)
+            throw new AlumnoNoEncontrado("Alumno no encotrado");
+        return id;
     }
     
 }

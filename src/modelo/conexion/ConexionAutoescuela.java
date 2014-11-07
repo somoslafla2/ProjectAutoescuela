@@ -33,6 +33,11 @@ public class ConexionAutoescuela {
         return c;
     }
     
+    public void closeConnection() throws SQLException{
+        if (!conexion.isClosed())
+            conexion.close();
+    }
+    
     private ConexionAutoescuela() {
         try {
             conexion = DriverManager.getConnection(

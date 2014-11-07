@@ -282,8 +282,8 @@ public class DatosAlumno extends javax.swing.JPanel implements InterfazVista{
     private javax.swing.JTextField jTextFieldTelefono;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void setControlador(Controlador c) {
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    @Override
+//    public void setControlador(Controlador c) {
+//       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 }

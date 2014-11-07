@@ -17,24 +17,21 @@ import vista.consola.exceptions.OptionNotValid;
  * @author Oscar
  */
 public class Menu implements InterfazVista{
-    
-    private Controlador controlador;
-    
+        
     private final String title;
     private Menu next;
     private Menu prev;
     private final List<Option> options;
 
-    public Menu(String title, Menu next, Menu prev, List<Option> options, Controlador controlador) {
+    public Menu(String title, Menu next, Menu prev, List<Option> options) {
         this.title = title;
         this.next = next;
         this.prev = prev;
         this.options = options;
-        this.controlador = controlador;
     }
 
-    public Menu(String title, List<Option> options, Controlador controlador){
-      this(title,null,null,options,controlador);  
+    public Menu(String title, List<Option> options){
+      this(title,null,null,options);  
     }  
     
     // Getters & Setters -------------------------------------------------------
@@ -98,10 +95,6 @@ public class Menu implements InterfazVista{
         }
     }
 
-    @Override
-    public void setControlador(Controlador c) {
-        this.controlador = c;
-    }
     
     // Inner class Option ------------------------------------------------------
     

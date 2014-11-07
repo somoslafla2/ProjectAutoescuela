@@ -6,7 +6,6 @@
 
 package vista;
 
-import controlador.Controlador;
 import modelo.carnet.TipoCarnet;
 import modelo.MatriculaAlumno;
 import vista.consola.entradaconsola.EntradaConsola;
@@ -17,9 +16,7 @@ import vista.consola.entradaconsola.EntradaConsola;
  */
 public interface InterfazVista {
     public static String CREATE = "CREATE";
-    
-    void setControlador(Controlador c);
-    
+        
     default void setId(int id){
         System.out.println("Usuario creado, Identificador: "+id);
     }
