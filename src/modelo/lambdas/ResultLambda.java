@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.swing.JOptionPane;
 import modelo.MatriculaAlumno;
 import modelo.conexion.ConexionAutoescuela;
 import modelo.interfaces.Result;
@@ -24,7 +25,7 @@ import modelo.llamadas.Llamadas;
 
 /**
  *
- * @author Oscar
+ * @author Oscar, Ester,Christian y Gonzalo
  */
 public class ResultLambda {
     /**
@@ -36,6 +37,7 @@ public class ResultLambda {
             rs = con.createStatement().executeQuery(Llamadas.CONSULTAR_TODO);
             
         } catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error", "Ha ocurrido un error\nen la conexión", JOptionPane.ERROR_MESSAGE);
             rs = null;
         }
         
@@ -70,7 +72,7 @@ public class ResultLambda {
             }
             llamada.close();  
         }catch(SQLException ex){
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error", "Ha ocurrido un error\nen la conexión", JOptionPane.ERROR_MESSAGE);
         }        
         return ma;
     };

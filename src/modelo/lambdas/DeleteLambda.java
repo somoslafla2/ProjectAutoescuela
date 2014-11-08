@@ -10,13 +10,14 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import modelo.conexion.ConexionAutoescuela;
 import modelo.interfaces.Delete;
 import modelo.llamadas.Llamadas;
 
 /**
  *
- * @author Oscar
+ * @author Oscar, Ester,Christian y Gonzalo
  */
 public class DeleteLambda {
     private final Delete<Integer, Boolean> borrar = (Integer id)->{
@@ -33,7 +34,7 @@ public class DeleteLambda {
             llamada.close();
             exito = true;
         }catch(SQLException ex){
-            
+            JOptionPane.showMessageDialog(null, "Error", "Ha ocurrido un error\nen la conexión", JOptionPane.ERROR_MESSAGE);
         }
         return exito;
     };

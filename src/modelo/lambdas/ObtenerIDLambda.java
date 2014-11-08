@@ -10,13 +10,14 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
+import javax.swing.JOptionPane;
 import modelo.conexion.ConexionAutoescuela;
 import modelo.interfaces.Result;
 import modelo.llamadas.Llamadas;
 
 /**
  *
- * @author Oscar
+ * @author Oscar, Ester,Christian y Gonzalo
  */
 public class ObtenerIDLambda {
     private final Result<String,Integer> consultarID = (String dni)->{
@@ -34,7 +35,7 @@ public class ObtenerIDLambda {
 
             llamada.close();
         } catch (SQLException ex){
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error", "Ha ocurrido un error\nen la conexión", JOptionPane.ERROR_MESSAGE);        
         }
 
         return id;

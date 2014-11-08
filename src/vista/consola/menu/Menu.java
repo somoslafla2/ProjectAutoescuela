@@ -6,7 +6,6 @@
 
 package vista.consola.menu;
 
-import controlador.Controlador;
 import java.util.List;
 import vista.InterfazVista;
 import vista.consola.entradaconsola.EntradaConsola;

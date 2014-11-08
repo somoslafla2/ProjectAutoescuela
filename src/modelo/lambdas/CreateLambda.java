@@ -7,21 +7,20 @@
 package modelo.lambdas;
 
 import controlador.ControladorSingleton;
-import modelo.carnet.TipoCarnet;
-import modelo.factoriaAlumnos.alumno.AlumnoPresencial;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import javax.swing.JOptionPane;
 import modelo.MatriculaAlumno;
 import modelo.conexion.ConexionAutoescuela;
 import modelo.interfaces.Create;
 import modelo.llamadas.Llamadas;
 
 /**
- *
- * @author Oscar
+ * Clase que contiene una expresión lambda del tipo Create<Matricula, Integer>
+ * @author Oscar, Ester,Christian y Gonzalo
  */
 public class CreateLambda {
     private final Create<MatriculaAlumno, Integer> crear = (MatriculaAlumno mA)->{
@@ -40,7 +39,7 @@ public class CreateLambda {
 
             llamada.close();
         } catch (SQLException ex){
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error", "Ha ocurrido un error\nen la conexión", JOptionPane.ERROR_MESSAGE);
         }
         return id;
     };

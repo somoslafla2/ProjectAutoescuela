@@ -159,9 +159,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNombre">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldNombreActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPrimerApellido">
         </Component>
@@ -198,9 +195,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDia">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldDiaActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelBarra">
           <Properties>
@@ -208,9 +202,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldMes">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldMesActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelBarra2">
           <Properties>
@@ -218,9 +209,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldAnnio">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldAnnioActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

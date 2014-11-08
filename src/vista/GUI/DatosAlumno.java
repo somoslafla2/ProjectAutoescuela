@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package vista.GUI;
 
-import controlador.Controlador;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-import vista.InterfazVista;
 
 /**
  *
  * @author Formacion
  */
-public class DatosAlumno extends javax.swing.JPanel implements InterfazVista{
+public class DatosAlumno extends javax.swing.JPanel {
+
+    private static final long serialVersionUID = 4673890389548850367L;
 
     /**
      * Creates new form DatosAlumno
@@ -28,7 +27,6 @@ public class DatosAlumno extends javax.swing.JPanel implements InterfazVista{
         return jTextFieldIdAlumno;
     }
 
-    
     public JTextField getjTextFieldNombre() {
         return jTextFieldNombre;
     }
@@ -49,8 +47,6 @@ public class DatosAlumno extends javax.swing.JPanel implements InterfazVista{
         return jTextFieldMes;
     }
 
-   
-
     public JTextField getjTextFieldPrimerApellido() {
         return jTextFieldPrimerApellido;
     }
@@ -68,8 +64,6 @@ public class DatosAlumno extends javax.swing.JPanel implements InterfazVista{
 
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -115,12 +109,6 @@ public class DatosAlumno extends javax.swing.JPanel implements InterfazVista{
 
         jLabelFechaNac.setText("Fecha de Nacimiento (dd/mm/aaaa):");
 
-        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNombreActionPerformed(evt);
-            }
-        });
-
         jLabelIdAlumno.setText("Identificador de Alumno:");
 
         jTextFieldIdAlumno.setEditable(false);
@@ -130,27 +118,9 @@ public class DatosAlumno extends javax.swing.JPanel implements InterfazVista{
 
         jComboBoxtipodeAlumno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Presencial", "A distancia" }));
 
-        jTextFieldDia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldDiaActionPerformed(evt);
-            }
-        });
-
         jLabelBarra.setText("/");
 
-        jTextFieldMes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldMesActionPerformed(evt);
-            }
-        });
-
         jLabelBarra2.setText("/");
-
-        jTextFieldAnnio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldAnnioActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanelDatosAlumnoLayout = new javax.swing.GroupLayout(jPanelDatosAlumno);
         jPanelDatosAlumno.setLayout(jPanelDatosAlumnoLayout);
@@ -241,22 +211,6 @@ public class DatosAlumno extends javax.swing.JPanel implements InterfazVista{
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNombreActionPerformed
-
-    private void jTextFieldMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldMesActionPerformed
-
-    private void jTextFieldAnnioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAnnioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldAnnioActionPerformed
-
-    private void jTextFieldDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDiaActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jComboBoxtipodeAlumno;
@@ -282,8 +236,4 @@ public class DatosAlumno extends javax.swing.JPanel implements InterfazVista{
     private javax.swing.JTextField jTextFieldTelefono;
     // End of variables declaration//GEN-END:variables
 
-//    @Override
-//    public void setControlador(Controlador c) {
-//       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
 }

@@ -5,7 +5,7 @@
  */
 package vista.GUI;
 
-import controlador.Controlador;
+import controlador.ControladorSingleton;
 import modelo.carnet.TipoCarnet;
 import modelo.factoriaAlumnos.alumno.AlumnoPresencial;
 import java.util.Calendar;
@@ -21,7 +21,6 @@ import vista.InterfazVista;
 public class GestionAlumnos extends javax.swing.JFrame implements InterfazVista {
 
     private static final long serialVersionUID = -612577678585684133L;
-    private Controlador controlador;
     private DatosAlumno activo;
     private enum Pestania {
         A, BM, C;
@@ -31,13 +30,14 @@ public class GestionAlumnos extends javax.swing.JFrame implements InterfazVista 
      */
     public GestionAlumnos() {
         ConexionAutoescuela cA = ConexionAutoescuela.getInstance();
-        controlador = new Controlador(cA);
+        //controlador = new Controlador(cA);
         initComponents();
 
         for (TipoCarnet carnet : TipoCarnet.values()) {
             jComboBoxTipoDeCarnet.addItem(carnet.name());
         }
-        controlador.setVista(this);
+        //controlador.setVista(this);
+        ControladorSingleton.getInstance().setVista(this);
         activo = datosAlumno1;
     }
 
@@ -367,7 +367,7 @@ public class GestionAlumnos extends javax.swing.JFrame implements InterfazVista 
         int x = JOptionPane.showConfirmDialog(null, "¿Desea dar de alta a este alumno?", "Alta de alumno", JOptionPane.OK_CANCEL_OPTION);
         if (x == JOptionPane.OK_OPTION) {
             comprobar();
-            controlador.crear();
+            ControladorSingleton.getInstance().crear();
         }
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
@@ -385,7 +385,7 @@ public class GestionAlumnos extends javax.swing.JFrame implements InterfazVista 
 
     private void jButtonMostrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMostrarTodoActionPerformed
       //Consultar todos los datos de todos los alumnos
-        controlador.consultar();
+        ControladorSingleton.getInstance().consultar();
     }//GEN-LAST:event_jButtonMostrarTodoActionPerformed
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
@@ -395,23 +395,20 @@ public class GestionAlumnos extends javax.swing.JFrame implements InterfazVista 
        int x= JOptionPane.showConfirmDialog(null, "¿Seguro que quieres borrar este dato?", "eliminar dato", JOptionPane.OK_CANCEL_OPTION);
         if  (x==JOptionPane.OK_OPTION){
             comprobar();
-            controlador.borrar();
+            ControladorSingleton.getInstance().borrar();
         }
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         // Busca a través del DNI los datos de un alumno 
-        int i= 0;
-        String dni
-                = JOptionPane.showInputDialog("Introducir DNI");
+        String dni = JOptionPane.showInputDialog("Introducir DNI");
 
-      //  if(JOptionPane.CANCEL_OPTION != 2){
-            jButtonBorrar.setEnabled(true);
-            jButtonModificar.setEnabled(true);
-            
-            
-            controlador.show(controlador.consultar(dni));
-       // }
+        if(dni != null){            
+            if(ControladorSingleton.getInstance().show(ControladorSingleton.getInstance().consultar(dni))){
+                jButtonBorrar.setEnabled(true);
+                jButtonModificar.setEnabled(true);
+            }
+        }
         
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
@@ -421,9 +418,7 @@ public class GestionAlumnos extends javax.swing.JFrame implements InterfazVista 
        int x= JOptionPane.showConfirmDialog(null, "¿Desea guardar las modificaciones realizadas?", "confirmar modificaciones", JOptionPane.OK_CANCEL_OPTION);
        if (x==JOptionPane.OK_OPTION){
            comprobar();
-           controlador.actualizar();
-         
-          
+           ControladorSingleton.getInstance().actualizar();
        }
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
@@ -484,9 +479,5 @@ public class GestionAlumnos extends javax.swing.JFrame implements InterfazVista 
     private javax.swing.JTextArea jTextTabla;
     // End of variables declaration//GEN-END:variables
 
-//    @Override
-//    public void setControlador(Controlador c) {
-//        this.controlador = c;
-//    }
 
 }

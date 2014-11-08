@@ -23,20 +23,7 @@ import modelo.lambdas.ObtenerIDLambda;
  */
 public class AlumnoDAO {
     
-    private Collection<Alumno> alumnos;
     private MatriculaAlumno ma;
-
-    public AlumnoDAO(Collection<Alumno> alumnos) {
-        this.alumnos = alumnos;
-    }
-
-    public Collection<Alumno> getAlumnos() {
-        return alumnos;
-    }
-
-    public void setAlumnos(Collection<Alumno> alumnos) {
-        this.alumnos = alumnos;
-    }
 
     public MatriculaAlumno getMa() {
         return ma;
@@ -44,19 +31,19 @@ public class AlumnoDAO {
     
     /**
      * Crear un alumno nuevo y su matriculación en la base de datos.
-     * @param crud
-     * @param ma
+     * @param crud 
+     * @param ma 
      * @return Retorna el IDALUMNO de la base de datos si se ha insertado correctamente,
      * en caso contrario retorna -1.
      */
-    public int create(Function<MatriculaAlumno,Integer> crud, MatriculaAlumno ma){
+    public int create(Function<MatriculaAlumno,Integer> crud, MatriculaAlumno ma) {
         Integer i = crud.apply(ma);
         return i;
     }
     
     /**
      * Consulta todos los alumno ingresados en la base de datos.
-     * @param crud Se fijan el tipo de retorno a String
+     * @param crud 
      * @return Retorna la cadena con los datos de los alumnos.
      */
     public String resultTodo(Function<ResultSet,ResultSet> crud) {
@@ -78,11 +65,11 @@ public class AlumnoDAO {
     
     /**
      * Consulta un alumno concreto en la base de datos a través del CRUD.
-     * @param crud Se fijan los datos de entrada y retorno a Integer y MariculaAlumno.
+     * @param crud 
      * @param dni
      * @return Retorna una MatriculaAlumno si el alumno con dni está en la base de datos,
      * en caso contrario, retorna null.
-     * @throws excepciones.AlumnoNoEncontrado
+     * @throws AlumnoNoEncontrado
      */
     public MatriculaAlumno resultAlumno(Function<Integer,MatriculaAlumno> crud, String dni) throws AlumnoNoEncontrado{
         Integer id = obtenerID(new ObtenerIDLambda().getConsultarID(), dni);
@@ -92,7 +79,7 @@ public class AlumnoDAO {
     
     /**
      * Actualiza un alumno de la base de datos a través del CRUD
-     * @param crud Se fijan los datos de entrada y retorno a Alumno y Boolean
+     * @param crud 
      * @param alumno
      * @return Retorna true si se ha realizado la actualización correctamente, y false
      * en caso contrario.
@@ -102,11 +89,11 @@ public class AlumnoDAO {
     }
     
     /**
-     * Borra un alumno de la base de datos a través del CRUD.
-     * @param crud Se fijan los datos de entrada y retorno a Integer y Boolean.
+     * Borra un alumno de la base de datos.
+     * @param crud 
      * @param dni
      * @return Retorna true si se borra correctamente y false en caso contrario.
-     * @throws excepciones.AlumnoNoEncontrado
+     * @throws AlumnoNoEncontrado
      */
     public boolean delete (Function<Integer,Boolean> crud, String dni) throws AlumnoNoEncontrado{
         Integer id = obtenerID(new ObtenerIDLambda().getConsultarID(),dni);

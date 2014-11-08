@@ -149,7 +149,7 @@ public class ControladorSingleton {
     }
     
     private ControladorSingleton() { 
-        dao = new AlumnoDAO(null);
+        dao = new AlumnoDAO();
     }
     
     public static ControladorSingleton getInstance() {
@@ -157,7 +157,6 @@ public class ControladorSingleton {
     }
     
     private static class ControladorSingletonHolder {
-
         private static final ControladorSingleton INSTANCE = new ControladorSingleton();
     }
 }

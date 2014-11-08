@@ -8,18 +8,18 @@ package modelo.lambdas;
 
 import controlador.ControladorSingleton;
 import modelo.factoriaAlumnos.alumno.Alumno;
-import modelo.factoriaAlumnos.alumno.AlumnoPresencial;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
+import javax.swing.JOptionPane;
 import modelo.conexion.ConexionAutoescuela;
 import modelo.interfaces.Update;
 import modelo.llamadas.Llamadas;
 
 /**
  *
- * @author Oscar
+ * @author Oscar, Ester,Christian y Gonzalo
  */
 public class UpdateLambda {
     private final Update<Alumno,Boolean> modificarAlumno = (Alumno alumno)->{
@@ -49,7 +49,7 @@ public class UpdateLambda {
             }
             llamada.close();
         }catch(SQLException ex){
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error", "Ha ocurrido un error\nen la conexión", JOptionPane.ERROR_MESSAGE);
         }
         return exito;
     };
