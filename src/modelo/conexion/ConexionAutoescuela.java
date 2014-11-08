@@ -12,27 +12,33 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Formacion
+ * Singleton de la conexión
+ * @author Oscar, Ester,Christian y Gonzalo
  */
 public class ConexionAutoescuela {
     
     private Connection conexion;
 
+    /**
+     * 
+     * @return Retorna la conexión y en el caso de que esté cerrada, la vuelve a abrir
+     */
     public Connection getConexion() {
-        Connection c = null;
         try {
             if (conexion.isClosed())
-                c = conexion;
-            else
-                c = DriverManager.getConnection(
+                conexion = DriverManager.getConnection(
                         "jdbc:oracle:thin:@localhost:1521:XE", "autoescuela", "autoescuela");
         } catch (SQLException ex) {
-            System.out.println("Vamos mal...");
+            JOptionPane.showMessageDialog(null, "Imposible realizar la conexión", 
+                    "Error de conexión", JOptionPane.ERROR_MESSAGE);
         }
-        return c;
+        return conexion;
     }
     
+    /**
+     * Cierre de conexión. Si la conexión ya está cerrada no es necesario volverla a cerrar
+     * @throws SQLException 
+     */
     public void closeConnection() throws SQLException{
         if (!conexion.isClosed())
             conexion.close();
