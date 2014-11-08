@@ -6,20 +6,19 @@
 
 package modelo;
 
-import controlador.ControladorSingleton;
 import excepciones.AlumnoNoEncontrado;
 import modelo.factoriaAlumnos.alumno.Alumno;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.lambdas.ObtenerIDLambda;
 
 /**
- *
- * @author Formacion
+ * Clase que se comunica con la base de datos y nuestro programa para crear, borrar
+ * y actualizar datos, así como obtener consultas.
+ * @author Oscar, Ester,Christian y Gonzalo
  */
 public class AlumnoDAO {
     

@@ -9,8 +9,10 @@ package modelo.interfaces;
 import java.util.function.Function;
 
 /**
- *
- * @author Oscar
+ * Interfaz de tipado que hereda de Function para recuperar una consulta.
+ * @author Oscar, Ester,Christian y Gonzalo
+ * @param <T> Tipo de entrada en el método apply de Function
+ * @param <R> Tipo de retorno en el método apply de Function
  */
 public interface Result<T,R> extends Function<T,R>{
     
