@@ -16,7 +16,7 @@ import modelo.interfaces.Delete;
 import modelo.llamadas.ILlamadas;
 
 /**
- * Clase que contiene una expresión lambda del tipo Delete<Integer, Boolean>
+ * Clase que contiene una expresión lambda del tipo Delete
  * @author Oscar, Ester,Christian y Gonzalo
  */
 public class DeleteLambda {

@@ -24,7 +24,7 @@ import modelo.interfaces.Result;
 import modelo.llamadas.ILlamadas;
 
 /**
- * Clase que contiene una expresión lambda del tipo Result<ResultSet, ResultSet>
+ * Clase que contiene una expresión lambda del tipo Result
  * @author Oscar, Ester,Christian y Gonzalo
  */
 public class ResultLambda {

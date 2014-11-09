@@ -19,7 +19,7 @@ import modelo.interfaces.Create;
 import modelo.llamadas.ILlamadas;
 
 /**
- * Clase que contiene una expresión lambda del tipo Create<Matricula, Integer>
+ * Clase que contiene una expresión lambda del tipo Create
  * @author Oscar, Ester,Christian y Gonzalo
  */
 public class CreateLambda {

@@ -38,8 +38,7 @@ public class ConexionAutoescuela {
     }
     
     /**
-     * Cierre de conexión. Si la conexión ya está cerrada no es necesario volverla a cerrar
-     * @throws SQLException 
+     * Cierre de conexión. Si la conexión ya está cerrada no es necesario volverla a cerrar 
      */
     public void closeConnection() {
         try {

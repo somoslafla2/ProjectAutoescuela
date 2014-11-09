@@ -18,7 +18,7 @@ import modelo.interfaces.Update;
 import modelo.llamadas.ILlamadas;
 
 /**
- * Clase que contiene una expresión lambda del tipo Update<Alumno, Boolean>
+ * Clase que contiene una expresión lambda del tipo Update
  * @author Oscar, Ester,Christian y Gonzalo
  */
 public class UpdateLambda {

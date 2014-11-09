@@ -16,7 +16,7 @@ import modelo.interfaces.Result;
 import modelo.llamadas.ILlamadas;
 
 /**
- * Clase que contiene una expresión lambda del tipo Result<String, Integer>
+ * Clase que contiene una expresión lambda del tipo Result
  * @author Oscar, Ester,Christian y Gonzalo
  */
 public class ObtenerIDLambda {
