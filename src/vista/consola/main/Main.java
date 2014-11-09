@@ -19,7 +19,6 @@ import vista.consola.menu.assets.AssetMenu;
 public class Main {
     public static void main(String[] args) {        
         ConexionAutoescuela.getInstance();
-        //Controlador controlador = new Controlador(cA);
         ControladorSingleton.getInstance();
         Menu m = AssetMenu.createMenu();
         ControladorSingleton.getInstance().setVista(m);

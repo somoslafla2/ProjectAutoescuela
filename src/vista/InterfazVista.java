@@ -11,7 +11,7 @@ import modelo.MatriculaAlumno;
 import vista.consola.entradaconsola.EntradaConsola;
 
 /**
- *
+ * Interfaz con métodos por defecto para recuperar y mostrar datos por consola
  * @author Formacion
  */
 public interface InterfazVista {

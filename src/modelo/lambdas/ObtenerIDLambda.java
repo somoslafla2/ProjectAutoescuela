@@ -13,23 +13,27 @@ import java.sql.Types;
 import javax.swing.JOptionPane;
 import modelo.conexion.ConexionAutoescuela;
 import modelo.interfaces.Result;
-import modelo.llamadas.Llamadas;
+import modelo.llamadas.ILlamadas;
 
 /**
- *
+ * Clase que contiene una expresión lambda del tipo Result<String, Integer>
  * @author Oscar, Ester,Christian y Gonzalo
  */
 public class ObtenerIDLambda {
+    /**
+     * Expresión lambda que devuelve un Integer que se corresponde con el identificador
+     * del alumno con DNI = dni en la base de datos, en caso de no encontralo devuelve -1.
+     */
     private final Result<String,Integer> consultarID = (String dni)->{
         Integer id = -1;
         Connection con = ConexionAutoescuela.getInstance().getConexion();
-        try (CallableStatement llamada = con.prepareCall(Llamadas.OBTENERIDALUMNO)) {
+        try (CallableStatement llamada = con.prepareCall(ILlamadas.OBTENERIDALUMNO)) {
             //Damos valor a los argumentos
-            llamada.registerOutParameter(1, Types.INTEGER);
-            llamada.setString(2, dni);
+            llamada.registerOutParameter(1, Types.INTEGER); // Tipo de salida de la función
+            llamada.setString(2, dni); // Se asocia el dni al playholder correspondiente en la llamada.
 
             int filas_afectadas = llamada.executeUpdate();
-            //System.out.println("las filas afectadas son: " + filas_afectadas);
+
             // Se recoge el IDALUMNO de la tabla
             id = llamada.getInt(1);
 

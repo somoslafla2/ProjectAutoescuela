@@ -21,10 +21,10 @@ import javax.swing.JOptionPane;
 import modelo.MatriculaAlumno;
 import modelo.conexion.ConexionAutoescuela;
 import modelo.interfaces.Result;
-import modelo.llamadas.Llamadas;
+import modelo.llamadas.ILlamadas;
 
 /**
- *
+ * Clase que contiene una expresión lambda del tipo Result<ResultSet, ResultSet>
  * @author Oscar, Ester,Christian y Gonzalo
  */
 public class ResultLambda {
@@ -34,7 +34,7 @@ public class ResultLambda {
     private final Result<ResultSet,ResultSet> consultarTodo = (ResultSet rs)->{
         Connection con = ConexionAutoescuela.getInstance().getConexion();
         try {
-            rs = con.createStatement().executeQuery(Llamadas.CONSULTAR_TODO);
+            rs = con.createStatement().executeQuery(ILlamadas.CONSULTAR_TODO);
             
         } catch (SQLException ex){
             JOptionPane.showMessageDialog(null, "Error", "Ha ocurrido un error\nen la conexión", JOptionPane.ERROR_MESSAGE);
@@ -52,9 +52,10 @@ public class ResultLambda {
         Connection con = ConexionAutoescuela.getInstance().getConexion();
         CallableStatement llamada;        
         try{
-            llamada = con.prepareCall(Llamadas.SACAR_ALUMNO_ID, 
+            llamada = con.prepareCall(ILlamadas.SACAR_ALUMNO_ID, 
                     ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
 
+            // Se registran los tipos de salida de los argumentos de la llamada.
             llamada.registerOutParameter(1, Types.VARCHAR);
             llamada.setInt(2, id);
             llamada.registerOutParameter(3, Types.VARCHAR);
@@ -66,10 +67,13 @@ public class ResultLambda {
 
             int filas = llamada.executeUpdate();
             
+            // Si la llamada ha tenido éxito.
             if (filas != 0){
                 ma = recogerLlamada(llamada, id);
                 ma = consultarCarnet(ma, id);                                    
             }
+            
+            // Se cierra la llamada.
             llamada.close();  
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error", "Ha ocurrido un error\nen la conexión", JOptionPane.ERROR_MESSAGE);
@@ -77,6 +81,13 @@ public class ResultLambda {
         return ma;
     };
 
+    /**
+     * Método privado en el que a partir de una llamada se recogen los datos de un alumno
+     * @param llamada
+     * @param id
+     * @return Retorna un objeto MatriculaAlumno con los datos del alumno
+     * @throws SQLException 
+     */
     private MatriculaAlumno recogerLlamada(CallableStatement llamada,Integer id) throws SQLException{
         MatriculaAlumno ma = null;
         
@@ -94,18 +105,32 @@ public class ResultLambda {
         return ma;
     }
     
+    /**
+     * Completa el objeto MatriculaAlumno con los datos del carnet matriculado
+     * @param ma
+     * @param id
+     * @return Retorna el objeto MatriculaAlumno ma totalmente cualificado.
+     * @throws SQLException 
+     */
     private MatriculaAlumno consultarCarnet(MatriculaAlumno ma, Integer id) throws SQLException{
+        // Se realiza una nueva consulta a la base de datos
         Connection con = ConexionAutoescuela.getInstance().getConexion();
-        CallableStatement llamada = con.prepareCall("SELECT TIPOCARNET, FECHAALTA FROM MATRICULALUMNO WHERE IDALUMNO=?");
+        // Se prepara la llamada correspondiente
+        CallableStatement llamada = con.prepareCall(ILlamadas.CONSULTAR_CARNET);
+        // Se asigna el valor del playholder de la llamada.
         llamada.setInt(1, id);
+        // Se recoge la consulta.
         ResultSet rs = llamada.executeQuery();
+        // Se recuperan los datos de la consulta.
         while(rs.next()){
             ma.setCarnets(TipoCarnet.valueOf(rs.getString("TIPOCARNET")));
             Calendar c = new GregorianCalendar();
             c.setTime(rs.getDate("FECHAALTA"));
             ma.setFechaAlta(c);
         }
+        // Se cierra el ResultSet.
         rs.close();
+        // Se cierra la llamada.
         llamada.close();
         return ma;
     }

@@ -29,26 +29,24 @@ public class AssetMenu {
     
     private static Menu createMenuPrincipal(){
         
-        Menu m = new Menu("Gestión Alumnos -----", new ArrayList());  
+        Menu m = new Menu("\nGESTIÓN ALUMNOS AutoescuelaGOCE -----", new ArrayList());  
         
         Action action = () -> {
-//            System.out.println("Recoger los datos del alumno");
-//            System.out.println("Dar de alta un alumno en la autoescuela\n");
+            System.out.println("\nINTRODUCIR DATOS DEL NUEVO ALUMNO -------");
             ControladorSingleton.getInstance().crear();
             return m;
         };
         m.createOption("0. Alta alumno", action);
         
         action = () -> {
-//            System.out.println("Seleccionar el alumno por algun criterio");
-//            System.out.println("Dar de baja un alumno en la autoescuela\n");
+            System.out.println("\nDAR DE BAJA UN ALUMNO -----");
             ControladorSingleton.getInstance().borrar();
             return m;
         };
         m.createOption("1. Baja Alumno", action);
         
         action = () -> { 
-//            System.out.println("Actualizo los datos de un alumno de la autoescuela\n");
+            System.out.println("\nACTUALIZAR DATOS ALUMNO ----------");
             if (ControladorSingleton.getInstance().show(ControladorSingleton.getInstance().consultar(null)))
                 ControladorSingleton.getInstance().actualizar();
             return m;
@@ -61,11 +59,8 @@ public class AssetMenu {
         m.createOption("3. Consultar por...", action);
         
         action = () -> {
-            try {
                 ConexionAutoescuela.getInstance().closeConnection();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Problema en la conexión", "Información de Conexión", JOptionPane.INFORMATION_MESSAGE);
-            }
+            
             System.exit(0);
             return null;
         };
@@ -75,17 +70,17 @@ public class AssetMenu {
     }
     
     private static Menu crearMenuConsultar(){
-        Menu m = new Menu("Menu Consultas -----", new ArrayList());
+        Menu m = new Menu("\nMenu Consultas -----", new ArrayList());
         
         Action action = () -> {
-//            System.out.println("Muestro todos los alumnos de la autoescuela con todos sus campos");
+            System.out.println("\nALUMNOS REGISTRADOS --------");
             ControladorSingleton.getInstance().consultar();
             return m;
         };
         m.createOption("0. Consultar todo", action);
         
         action = () -> {
-//            System.out.println("Consulto por algun criterio");
+            System.out.println("\nDATOS DE UN ALUMNO ---------------------------");
             ControladorSingleton.getInstance().show(ControladorSingleton.getInstance().consultar(null));
             return m;  
         };

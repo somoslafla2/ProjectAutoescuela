@@ -13,26 +13,32 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import modelo.conexion.ConexionAutoescuela;
 import modelo.interfaces.Delete;
-import modelo.llamadas.Llamadas;
+import modelo.llamadas.ILlamadas;
 
 /**
- *
+ * Clase que contiene una expresión lambda del tipo Delete<Integer, Boolean>
  * @author Oscar, Ester,Christian y Gonzalo
  */
 public class DeleteLambda {
+    /**
+     * Expresión lambda que realiza el borrado de un alumno concreto de la base de
+     * datos por medio de su indentificador.
+     */
     private final Delete<Integer, Boolean> borrar = (Integer id)->{
         boolean exito = false;
         Connection con = ConexionAutoescuela.getInstance().getConexion();
-        try (CallableStatement llamada = con.prepareCall(Llamadas.BORRAR_ALUMNO,
+        try (CallableStatement llamada = con.prepareCall(ILlamadas.BORRAR_ALUMNO,
                     ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE)){
-            //Damos valor a los argumentos
-            llamada.setInt(1, id); // recoger el id
+            // Se da valor a los argumentos de la llamada
+            llamada.setInt(1, id); // Se asigna el identidificador del alumno a borrar
 
             int filas_afectadas = llamada.executeUpdate();
-           // System.out.println("las filas afectadas son: " + filas_afectadas);
-
+            if (filas_afectadas != 0)  // Se ha conseguido borrar el alumno
+                exito = true;
+            
+            //Se cierra la llamada
             llamada.close();
-            exito = true;
+            
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error", "Ha ocurrido un error\nen la conexión", JOptionPane.ERROR_MESSAGE);
         }

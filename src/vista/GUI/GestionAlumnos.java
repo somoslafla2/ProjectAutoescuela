@@ -6,6 +6,8 @@
 package vista.GUI;
 
 import controlador.ControladorSingleton;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import modelo.carnet.TipoCarnet;
 import modelo.factoriaAlumnos.alumno.AlumnoPresencial;
 import java.util.Calendar;
@@ -15,7 +17,8 @@ import modelo.conexion.ConexionAutoescuela;
 import vista.InterfazVista;
 
 /**
- *
+ * Clase de la GUI que implementa la InterfazVista y la sobreescribe, ya que los datos
+ * no se van a recoger por consola, si no por los componentes del Swing
  * @author Gonzalo,Oscar,Christian y Ester
  */
 public class GestionAlumnos extends javax.swing.JFrame implements InterfazVista {
@@ -25,6 +28,7 @@ public class GestionAlumnos extends javax.swing.JFrame implements InterfazVista 
     private enum Pestania {
         A, BM, C;
     }
+    
     /**
      * Creates new form GestionAlumno
      */
@@ -33,10 +37,19 @@ public class GestionAlumnos extends javax.swing.JFrame implements InterfazVista 
         //controlador = new Controlador(cA);
         initComponents();
 
+        // Se añade un nevo evento al cerrar la venta para que cierre la conexión
+        // con la base de datos.
+        addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing( WindowEvent evt ) { 
+                ConexionAutoescuela.getInstance().closeConnection();
+                System.exit( 0 ); 
+            } 
+        });
+        
         for (TipoCarnet carnet : TipoCarnet.values()) {
             jComboBoxTipoDeCarnet.addItem(carnet.name());
         }
-        //controlador.setVista(this);
         ControladorSingleton.getInstance().setVista(this);
         activo = datosAlumno1;
     }

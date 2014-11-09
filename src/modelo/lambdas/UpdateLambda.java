@@ -15,36 +15,47 @@ import java.sql.Types;
 import javax.swing.JOptionPane;
 import modelo.conexion.ConexionAutoescuela;
 import modelo.interfaces.Update;
-import modelo.llamadas.Llamadas;
+import modelo.llamadas.ILlamadas;
 
 /**
- *
+ * Clase que contiene una expresión lambda del tipo Update<Alumno, Boolean>
  * @author Oscar, Ester,Christian y Gonzalo
  */
 public class UpdateLambda {
+    /**
+     * Expresión lambda que retorna true si se ha conseguido actualizar un alumno
+     * y false en caso contrario.
+     */
     private final Update<Alumno,Boolean> modificarAlumno = (Alumno alumno)->{
         //Damos valor a los argumentos
         boolean exito = false;
         Connection con = ConexionAutoescuela.getInstance().getConexion();
         CallableStatement llamada;
         try {
-            llamada = con.prepareCall(Llamadas.OBTENERIDALUMNO);
+            // Se prepara la llamada
+            llamada = con.prepareCall(ILlamadas.OBTENERIDALUMNO);
             //Damos valor a los argumentos
-            llamada.registerOutParameter(1, Types.INTEGER);
+            llamada.registerOutParameter(1, Types.INTEGER); // Tipo de salida
             llamada.setString(2, alumno.getDni());
+            // Se ejecuta la llamada.
             int filas = llamada.executeUpdate();
-            Integer id = -1;
+            Integer id = new Integer(-1);
+            // Si la llamada ha tenido éxito
             if (filas != 0){
-                id = llamada.getInt(1);
-            }
+                id = llamada.getInt(1); // Se recoge el identificador
+            } 
+            // Se cierra la llamada.
             llamada.close();
+            // Se comprueba que el identificador sea distinto de -1, lo que quiere 
+            // decir que hemos encontrado el alumno.
             if (id != -1){
-                llamada = con.prepareCall(Llamadas.MODIFICAR_ALUMNO);
+                // Se realiza la actualización de los datos de dicho alumno
+                llamada = con.prepareCall(ILlamadas.MODIFICAR_ALUMNO);
                 llamada.setInt(1, id);
                 ControladorSingleton.getInstance().prepararLlamada(llamada, alumno, null);
 
                 int filas_afectadas = llamada.executeUpdate();
-                //System.out.println("las filas afectadas son: " + filas_afectadas);
+                
                 exito = true;
             }
             llamada.close();

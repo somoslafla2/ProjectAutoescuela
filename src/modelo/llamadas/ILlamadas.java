@@ -7,12 +7,12 @@
 package modelo.llamadas;
 
 /**
- *
- * @author Oscar
+ * Interfaz con las llamadas a las funciones almacenadas de la base de datos, así
+ * como consultas a la misma.
+ * @author Oscar, Ester,Christian y Gonzalo
  */
 public interface ILlamadas {
-    static String CONSULTARDNI = "{?=call OBTENERIDALUMNO(?)}";
-    static String INSERTAR_NUEVO = "{call INSERTARNUEVO(?,?,?,?,?,?,?,?,?)}";
+    //static String INSERTAR_NUEVO = "{call INSERTARNUEVO(?,?,?,?,?,?,?,?,?)}";
     static String INSERTAR_NUEVO2 = "{?=call INSERTARNUEVO2(?,?,?,?,?,?,?,?,?)}";
     static String BORRAR_ALUMNO = "{call BORRARALUMNO(?)}";
     static String OBTENERIDALUMNO = "{? = call OBTENERIDALUMNO(?)}";
@@ -20,4 +20,5 @@ public interface ILlamadas {
     static String SACAR_ALUMNO_DNI = "{?=call SACARALUMNOPORDNI(?,?,?,?,?,?,?)}";
     static String SACAR_ALUMNO_ID = "{?=call SACAR(?,?,?,?,?,?,?)}";
     static String MODIFICAR_ALUMNO = "{call MODIFICARALUMNO(?,?,?,?,?,?,?,?)}";
+    static String CONSULTAR_CARNET = "SELECT TIPOCARNET, FECHAALTA FROM MATRICULALUMNO WHERE IDALUMNO=?";
 }

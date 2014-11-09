@@ -9,6 +9,8 @@ package modelo.conexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -39,9 +41,13 @@ public class ConexionAutoescuela {
      * Cierre de conexión. Si la conexión ya está cerrada no es necesario volverla a cerrar
      * @throws SQLException 
      */
-    public void closeConnection() throws SQLException{
-        if (!conexion.isClosed())
-            conexion.close();
+    public void closeConnection() {
+        try {
+            if (!conexion.isClosed())
+                conexion.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error", "Error al cerrar la conexión", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     private ConexionAutoescuela() {
